@@ -14,9 +14,9 @@ Project for ISYE 3133
 ├── code                                    <- General folder with scripts, code, and notebooks for the outputs
 │   |                                           
 |   ├── animal_data.ipynb                   <- Notebook with defining animals for Gurobi
-|   |                                           of health and dental insurance payers
 |   |                                           
-|   └── <insert name for gurobi file>       <- 
+|   |                                           
+|   └── phase2_implementation.py            <- Draft of deliverable .py file 
 |
 ├── deliverables                            <- Folder with project deliverables 
 |

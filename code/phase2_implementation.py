@@ -3,7 +3,8 @@
 import pandas as pd
 import numpy as np
 import os.path
-
+import gurobipy as gp
+from gurobipy import GRB
 
 def import_data():
 	# specify file name in local file structure
@@ -42,3 +43,29 @@ def import_data():
 	attractions = pd.read_excel(file, sheet_name="Attractions", header=0)
 
 	return animals, attractions
+
+def model():
+	try:
+		# Create model
+		m = gp.Model("zoo")
+
+		# Create variables
+		# x = m.addVar(name="x")
+
+		# Set objective
+		#m.setObjective(obj_function, GRB.MAXIMIZE)
+
+		# Add constraints
+		#m.addConstr()
+
+		# Run
+		#m.optimize()
+
+		# Results
+		for v in m.getVars():
+			print(v.varName, v.x)
+
+		print('Obj: ', m.objVal)
+
+	except gp.GurobiError as e:
+		print('error detected: ', e)

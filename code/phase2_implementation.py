@@ -36,14 +36,12 @@ animals['adult_bool'] = (animals['Age'] >= animals['Adulthood Age']).astype(int)
 animals['food_quantity'] = np.where(animals['adult_bool'] == 1, animals['Adult Recommended food'], animals['Child Recommended Food'])
 animals = animals.drop(columns=['Age', 'Adulthood Age', 'Child Recommended Food', 'Adult Recommended food', 'adult_bool'])
 
-
 # import facility investment sheet
 attractions = pd.read_excel(file, sheet_name="Attractions", header=0)
 attractions = attractions.rename(columns={"Estimated Monthly Attendance Increase/$10,000 Investment": "q"})
 print(animals.to_string())
 print(attractions.to_string())
 
-animals.to_excel("revised.xlsx")
 # Create model
 m = gp.Model("zoo")
 
@@ -51,7 +49,6 @@ m = gp.Model("zoo")
 food_types = [1, 2, 3]
 x = m.addVars(animals.index, food_types, name="x")
 a = m.addVars(attractions.index, name="a")
-
 
 # Set objective
 m.setObjective(sum([sum([x[i, j] * animals[f'w{j}'][i] for j in food_types]) / animals['food_quantity'][i] for i in animals.index]), GRB.MAXIMIZE)
@@ -65,14 +62,11 @@ m.addConstrs((sum([x[i, j] for j in food_types]) == animals['food_quantity'][i] 
 m.addConstrs((a[k] >= 0 for k in attractions.index), name="sign1")
 m.addConstrs((x[i, j] >= 0 for i in animals.index for j in food_types), name="sign2")
 
-
 # Run
 m.optimize()
-
 
 # Results
 for v in m.getVars():
 	print(v.varName, v.x)
-
 print('Obj: ', m.objVal)
 

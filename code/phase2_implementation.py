@@ -57,7 +57,7 @@ print(obj.getValue())
 
 # Add constraints
 m.addConstrs((a[k] <= 20000 for k in attractions.index), name="a_k")
-m.addConstr(200000 + 0.001*np.dot(attractions["q"], [a[k] for k in attractions.index]) >= 1.05*(100000 + sum([a[k] for k in attractions.index]) + 9*sum([sum([x[i, j] * animals[f'c{j}'][i] for j in food_types]) for i in animals.index])), name="profit")
+m.addConstr(200000 + 0.003*np.dot(attractions["q"], [a[k] for k in attractions.index]) >= 1.05*(100000 + sum([a[k] for k in attractions.index]) + 9*sum([sum([x[i, j] * animals[f'c{j}'][i] for j in food_types]) for i in animals.index])), name="profit")
 m.addConstrs((sum([x[i, j] for j in food_types]) == animals['food_quantity'][i] for i in animals.index), name="food")
 m.addConstrs((a[k] >= 0 for k in attractions.index), name="sign1")
 m.addConstrs((x[i, j] >= 0 for i in animals.index for j in food_types), name="sign2")

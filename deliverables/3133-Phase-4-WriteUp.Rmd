@@ -22,8 +22,7 @@ Our solution is as follows:
 
 - For food for the initial set of animals, the zoo should purchase solely the food type with the highest welfare value in the full quantity required by each animal.  
 - The zoo should invest /$20,000 in each of the nine attractions/facilities. 
-- The zoo should adopt the following quantities of each species:  2 american alligators, 4 siberian tigers, 4 clouded leopards, 2 polar bears, 4 west african lions, and 2 llamas. 
+- The zoo should adopt the following quantities of each species:  2 American alligators, 4 Siberian tigers, 4 clouded leopards, 2 polar bears, 4 West African lions, and 2 llamas. 
 - For newly adopted animals, the zoo should also purchase the full quantity of food required in the food type with the highest welfare value.  
 
-# Explanation
-Our objective function is a summation of the welfare scores of the initial set of animals plus the summation of the welfare scores of the newly adopted animals. Our model is first constrained by maximum spend of /$20,000 each on facility investment (constraints described in the same order as listed in the phase 3 submission). We then ensure a 5% profit margin using summations of profit and costs. 
+A table is attached with the our findings listed numerically. 

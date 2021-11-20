@@ -12,24 +12,33 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # Notes/Assumptions
 
- - The indices of animal, food type, and facility are the indices of the table in the provided data set - $i, j, k \, \forall \, i \in [1:3], j \in [1:20], k \in [1:9]$.  
- - The model requires that recommended food value be assigned to individual animals before the model is run - for example, child animals will be assigned the child food recommended intake, and adult animals will be assigned the adult food recommended intake, based on the adulthood age of the animal's species.  
- - We assume there are 90 days/3 months in one fiscal quarter.  
- 
- - The number of species are indicated by the original indices of the data set: $m\, \in [1:14]$
- - Assume the animals adopted are adults 
- - We can adopt at most 1 species of big cats, which is the species of cat that got moved to the new enclosure
+  - The indices of individual animal, food type, facility, and species are
+    the indices of the table in the provided data set -
+    $(i, j, k, m \, \forall \, i \in [1:3], j \in [1:20], k \in [1:9], m \in     [1:14])$
+  - The indices for individual animal available for adoption for all species     are one through five: $(n\in[1:5])$
+  - The model requires that recommended food value be assigned to
+    individual animals before the model is run - for example, child
+    animals will be assigned the child food recommended intake, and adult
+    animals will be assigned the adult food recommended intake, based on
+    the adulthood age of the animal's species. 
+  - We assume there are 90 days/3 months in one fiscal quarter.
+  - The number of species are indicated by the original indices of the
+    data set: $m\, \in [1:14]$
+  - Assume the animals adopted are adults 
+  - We can adopt at most 1 species of big cats, which is the species of cat
+    that got moved to the new enclosure
  
 
 # Data / Parameters  
 $$
 \begin{aligned}
   c_{ij} &= \textrm{cost per pound of food type } j \textrm{ for individual animal } i \\
+  e_{j,m} &= \textrm{cost per pound of food type } j \textrm{ for adult animal of species } m \\
   w_{ij} &= \textrm{welfare score for food type } j \textrm{ for individual animal } i \\
   q_{k} &= \textrm{estimated monthly attendance increase per 10,000 dollar investment in facility } k \\
   r_{i} &= \textrm{pounds of food required per day by individual animal } i \\
-  f_{j,m} &= \text{welfare score for food type j for species m}\\
-  g_{m} &= \text{recommended food quantity for an adult of species m} \\
+  f_{j,m} &= \textrm{welfare score for food type } j \textrm{ for species } m\\
+  g_{m} &= \text{recommended food quantity for an adult of species } m \\
 \end{aligned}
 $$  
 
@@ -39,10 +48,12 @@ $$
 
 $$
 \begin{aligned}
-  z_{m} &= \text{number of animals of species m adopted} \\
-  d_{n,j,m} &= \text{amount of food given to nth animal up for adoption for food type j of species m}\\
+  x_{i,j} &= \text{amount of food of type } j \text{ bought for individual animal } i\\
+  a_{k} &= \text{amount invested in facility } k\\
+  z_{m} &= \text{number of animals of species } m \text{ adopted} \\
+  d_{n,j,m} &= \text{amount of food given to } n^{\text{th}} \text{ animal up for adoption for food type } j \text{ of species } m\\
   y_{m} 
-    &= \text{if an animal of species m is adopted}\\
+    &= \text{if an animal of species } m \text{ is adopted}\\
     & 
       \begin{cases} 
           \begin{aligned}
@@ -51,7 +62,7 @@ $$
           \end{aligned} 
       \end{cases} \\
   h_{n,m} 
-    &= \text{if the nth animal of species m is adopted}\\
+    &= \text{if the } n^{\text{th}} \text{animal of species } m \text{ is adopted}\\
     & 
       \begin{cases} 
           \begin{aligned}
@@ -78,7 +89,10 @@ $$
   & 200000 + \sum_{k=1}^{9} \frac{3(10)(q_{k})(a_k)}{10000} \geq 
       1.05 \left( 
           100000 + \sum_{k=1}^{9}a_{k} + 
-          \sum_{i=1}^{20} \sum_{j=1}^{3}\frac{90(x_{ij})(c_{ij})}{10} 
+          \sum_{i=1}^{20} \sum_{j=1}^{3}\frac{90(x_{ij})(c_{ij})}{10} + 
+          \sum_{n = 1}^{5}
+            \sum_{j = 1}^{3}
+            \sum_{m = 1}^{14} \frac{90(d_{n,j,m})(e_{j,m})}{10}
       \right) \\
   & \sum_{j=1}^{3}x_{ij} = r_{i} \, \forall \, i\\
   & \sum_{m = 1}^{14}z_{m} \ge 5 \\
@@ -89,7 +103,7 @@ $$
   & y_{2} + y_{3} + y_{8} + y_{9} + y_{11} \le 2 \\ 
   & d_{n,j,m} \le h_{n,m}g_{m} \\
   & x_{ij}, a_{k}, z_{m}, d_{njm} \ge 0 \, \forall \, i,j,k,m,n \\
-  & y = 0 \, \text{or} \, 1 \\
-  & h = 0 \, \text{or} \, 1 \\
+  & y_{m} = 0 \, \text{or} \, 1 \, \forall \, m\\
+  & h_{n,m} = 0 \, \text{or} \, 1 \, \forall \, m, n\\
 \end{aligned}
 $$  

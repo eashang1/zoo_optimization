@@ -137,7 +137,7 @@ not_big_cats = [1, 2, 3, 4, 8, 9, 11, 12, 13, 14]
 m.addConstrs((z[m - 1] <= 2 for m in not_big_cats), name="maximum adopted not big cats")
 
 # Can adopt at most one species of big cat
-m.addConstr(gp.quicksum([y[m] for m in big_cats]) <= 1, name="adopt at most one big cat")
+m.addConstr(gp.quicksum([y[m-1] for m in big_cats]) <= 1, name="adopt at most one big cat")
 
 # Can adopt at most one new species
 new_species = [1, 4, 12, 13, 14]

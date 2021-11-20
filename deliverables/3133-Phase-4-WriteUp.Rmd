@@ -1,0 +1,29 @@
+---
+title: "ISYE 3133 Phase 4 Submission"
+author: "Nathan Cung, Eashan Gandotra, and Malina Hy"
+date: "11/19/2021"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Assumptions  
+We made several assumptions in conducting this model, listed in both phases of the project submission. They are as follows:  
+ - The indices of animal, food type, and facility are the indices of the table in the provided data set - $i, j, k \space \forall \space i \in [1:3], j \in [1:20], k \in [1:9]$.  
+ - The model requires that recommended food value be assigned to individual animals before the model is run - for example, child animals will be assigned the child food recommended intake, and adult animals will be assigned the adult food recommended intake, based on the adulthood age of the animal's species.  
+ - We assume there are 90 days/3 months in one fiscal quarter.   - The number of species are indicated by the original indices of the data set: $m\, \in [1:14]$
+ - Assume the animals adopted are adults 
+ - We can adopt at most 1 species of big cats, which is the species of cat that got moved to the new enclosure
+ 
+# Solution  
+Our solution is as follows: 
+
+- For food for the initial set of animals, the zoo should purchase solely the food type with the highest welfare value in the full quantity required by each animal.  
+- The zoo should invest /$20,000 in each of the nine attractions/facilities. 
+- The zoo should adopt the following quantities of each species:  2 american alligators, 4 siberian tigers, 4 clouded leopards, 2 polar bears, 4 west african lions, and 2 llamas. 
+- For newly adopted animals, the zoo should also purchase the full quantity of food required in the food type with the highest welfare value.  
+
+# Explanation
+Our objective function is a summation of the welfare scores of the initial set of animals plus the summation of the welfare scores of the newly adopted animals. Our model is first constrained by maximum spend of /$20,000 each on facility investment (constraints described in the same order as listed in the phase 3 submission). We then ensure a 5% profit margin using summations of profit and costs. 

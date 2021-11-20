@@ -66,7 +66,7 @@ $$
     & 
       \begin{cases} 
           \begin{aligned}
-              &1, && \text{if}\, n \ge z_{m} \\
+              &1, && \text{if}\, n \le z_{m} \\
               &0, && \text{otherwise}
           \end{aligned} 
       \end{cases} \\
